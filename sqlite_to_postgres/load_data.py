@@ -1,20 +1,32 @@
 import sqlite3
-
 import psycopg2
-from psycopg2.extensions import connection as _connection
+from dataclasses import fields
+from settings import dsl, batch_size, db_path
 from psycopg2.extras import DictCursor
+from integration import ServiceLoad
+from tables import getTablesClass
 
 
-def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
-    """Основной метод загрузки данных из SQLite в Postgres"""
-    # postgres_saver = PostgresSaver(pg_conn)
-    # sqlite_extractor = SQLiteExtractor(connection)
-
-    # data = sqlite_extractor.extract_movies()
-    # postgres_saver.save_all_data(data)
+def load_from_sqlite(db_path: str):
+    with sqlite3.connect(db_path) as sqlite_conn, psycopg2.connect(
+        **dsl, cursor_factory=DictCursor
+    ) as pg_conn:
+        sqlite_conn.row_factory = sqlite3.Row
+        dict_tables = getTablesClass()
+        keys = dict_tables.keys()
+        for item in keys:
+            load = ServiceLoad()
+            load.sql_count = 'select count(*) as count from %s;' % item
+            load.sql_load = 'select * from %s;' % item
+            column_names = [field.name for field in fields(dict_tables[item])]
+            column_names_str = ','.join(column_names)
+            load.sql_insert = (
+                f'insert into {item}' f' ({column_names_str}) values %s '
+            )
+            load.load_sqllite(
+                sqlite_conn, pg_conn, batch_size, dict_tables[item]
+            )
 
 
 if __name__ == '__main__':
-    dsl = {'dbname': 'movies_database', 'user': 'app', 'password': '123qwe', 'host': '127.0.0.1', 'port': 5432}
-    with sqlite3.connect('db.sqlite') as sqlite_conn, psycopg2.connect(**dsl, cursor_factory=DictCursor) as pg_conn:
-        load_from_sqlite(sqlite_conn, pg_conn)
+    load_from_sqlite(db_path)

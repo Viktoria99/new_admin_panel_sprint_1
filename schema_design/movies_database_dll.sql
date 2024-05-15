@@ -1,11 +1,5 @@
--- DROP SCHEMA "content";
 
 CREATE SCHEMA "content" AUTHORIZATION habrpguser;
--- "content".film_work definition
-
--- Drop table
-
--- DROP TABLE "content".film_work;
 
 CREATE TABLE "content".film_work (
 	id uuid NOT NULL,
@@ -20,13 +14,6 @@ CREATE TABLE "content".film_work (
 );
 CREATE INDEX film_work_creation_date_type_rating_idx ON content.film_work USING btree (creation_date, type, rating);
 
-
--- "content".genre definition
-
--- Drop table
-
--- DROP TABLE "content".genre;
-
 CREATE TABLE "content".genre (
 	id uuid NOT NULL,
 	"name" text NOT NULL,
@@ -36,13 +23,6 @@ CREATE TABLE "content".genre (
 	CONSTRAINT genre_pkey PRIMARY KEY (id)
 );
 
-
--- "content".person definition
-
--- Drop table
-
--- DROP TABLE "content".person;
-
 CREATE TABLE "content".person (
 	id uuid NOT NULL,
 	full_name text NOT NULL,
@@ -50,13 +30,6 @@ CREATE TABLE "content".person (
 	modified timestamptz NULL,
 	CONSTRAINT person_pkey PRIMARY KEY (id)
 );
-
-
--- "content".genre_film_work definition
-
--- Drop table
-
--- DROP TABLE "content".genre_film_work;
 
 CREATE TABLE "content".genre_film_work (
 	id uuid NOT NULL,
@@ -68,12 +41,6 @@ CREATE TABLE "content".genre_film_work (
 	CONSTRAINT genre_film_work_genre_id_fkey FOREIGN KEY (genre_id) REFERENCES "content".genre(id)
 );
 
-
--- "content".person_film_work definition
-
--- Drop table
-
--- DROP TABLE "content".person_film_work;
 
 CREATE TABLE "content".person_film_work (
 	id uuid NOT NULL,
