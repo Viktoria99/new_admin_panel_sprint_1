@@ -41,7 +41,6 @@ CREATE TABLE "content".genre_film_work (
 	CONSTRAINT genre_film_work_genre_id_fkey FOREIGN KEY (genre_id) REFERENCES "content".genre(id)
 );
 
-
 CREATE TABLE "content".person_film_work (
 	id uuid NOT NULL,
 	film_work_id uuid NOT NULL,
@@ -53,5 +52,3 @@ CREATE TABLE "content".person_film_work (
 	CONSTRAINT person_film_work_person_id_fkey FOREIGN KEY (person_id) REFERENCES "content".person(id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX film_work_person_role_idx ON content.person_film_work USING btree (film_work_id, person_id, role);
-
-
