@@ -1,14 +1,15 @@
+import os
 from pathlib import Path
 
 db_path = 'db.sqlite'
 batch_size = 100
 dsl = {
-    'dbname': 'movies_database',
-    'user': 'habrpguser',
-    'password': 'pgpwd4habr',
-    'host': 'localhost',
-    'port': 5432,
-    'options': '-c search_path=content',
+    'dbname': os.environ.get('dbname', 'movies_database'),
+    'user': os.environ.get('user', 'habrpguser'),
+    'password': os.environ.get('password', 'pgpwd4habr'),
+    'host': os.environ.get('host', 'localhost'),
+    'port': os.environ.get('port', 5432),
+    'options': os.environ.get('options', '-c search_path=content'),
 }
 
 batch_100 = 100

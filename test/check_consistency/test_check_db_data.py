@@ -1,5 +1,6 @@
 import sqlite3
 import psycopg2
+import contextlib
 from psycopg2.extras import DictCursor
 from sqlite_to_postgres.tables import *
 from sqlite_to_postgres.settings import *
@@ -23,8 +24,10 @@ if __name__ == '__main__':
 
 
 def test_check_data_film():
-    with sqlite3.connect(path_sqllite) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(path_sqllite)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
 
         postgres_cursor = pg_conn.cursor()
@@ -58,8 +61,10 @@ if __name__ == '__main__':
 
 def test_check_data_genre():
     with (
-        sqlite3.connect(path_sqllite) as sqlite_conn,
-        psycopg2.connect(**dsl, cursor_factory=DictCursor) as pg_conn,
+        contextlib.closing(sqlite3.connect(path_sqllite)) as sqlite_conn,
+        contextlib.closing(
+            psycopg2.connect(**dsl, cursor_factory=DictCursor)
+        ) as pg_conn,
     ):
 
         postgres_cursor = pg_conn.cursor()
@@ -95,8 +100,10 @@ if __name__ == '__main__':
 
 
 def test_check_data_person():
-    with sqlite3.connect(path_sqllite) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(path_sqllite)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
 
         postgres_cursor = pg_conn.cursor()
@@ -132,8 +139,10 @@ if __name__ == '__main__':
 
 
 def test_check_data_person_film():
-    with sqlite3.connect(path_sqllite) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(path_sqllite)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
 
         postgres_cursor = pg_conn.cursor()
@@ -171,8 +180,10 @@ if __name__ == '__main__':
 
 
 def test_check_data_genre_film():
-    with sqlite3.connect(path_sqllite) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(path_sqllite)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
 
         postgres_cursor = pg_conn.cursor()

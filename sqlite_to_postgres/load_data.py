@@ -1,5 +1,6 @@
 import sqlite3
 import psycopg2
+import contextlib
 from dataclasses import fields
 from settings import dsl, batch_size, db_path
 from psycopg2.extras import DictCursor
@@ -8,8 +9,10 @@ from tables import getTablesClass
 
 
 def load_from_sqlite(db_path: str):
-    with sqlite3.connect(db_path) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(db_path)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
         sqlite_conn.row_factory = sqlite3.Row
         dict_tables = getTablesClass()

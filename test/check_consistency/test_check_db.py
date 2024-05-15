@@ -1,12 +1,15 @@
 import sqlite3
 import psycopg2
+import contextlib
 from psycopg2.extras import DictCursor
 from sqlite_to_postgres.settings import *
 
 
 def test_count_film_rows():
-    with sqlite3.connect(path_sqllite) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(path_sqllite)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
         postgres_cursor = pg_conn.cursor()
         sqlLite_curs = sqlite_conn.cursor()
@@ -23,8 +26,10 @@ if __name__ == '__main__':
 
 
 def test_count_genre_rows():
-    with sqlite3.connect(path_sqllite) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(path_sqllite)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
         postgres_cursor = pg_conn.cursor()
         sqlLite_curs = sqlite_conn.cursor()
@@ -41,8 +46,10 @@ if __name__ == '__main__':
 
 
 def test_count_person_rows():
-    with sqlite3.connect(path_sqllite) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(path_sqllite)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
         postgres_cursor = pg_conn.cursor()
         sqlLite_curs = sqlite_conn.cursor()
@@ -59,8 +66,10 @@ if __name__ == '__main__':
 
 
 def test_count_person_film_rows():
-    with sqlite3.connect(path_sqllite) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(path_sqllite)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
         postgres_cursor = pg_conn.cursor()
         sqlLite_curs = sqlite_conn.cursor()
@@ -77,8 +86,10 @@ if __name__ == '__main__':
 
 
 def test_count_genre_film_rows():
-    with sqlite3.connect(path_sqllite) as sqlite_conn, psycopg2.connect(
-        **dsl, cursor_factory=DictCursor
+    with contextlib.closing(
+        sqlite3.connect(path_sqllite)
+    ) as sqlite_conn, contextlib.closing(
+        psycopg2.connect(**dsl, cursor_factory=DictCursor)
     ) as pg_conn:
         postgres_cursor = pg_conn.cursor()
         sqlLite_curs = sqlite_conn.cursor()
