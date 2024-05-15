@@ -55,15 +55,14 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
         validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
     type = models.CharField(_('type'), max_length=100, choices=TYPE_CHOICES)
+    file_path = models.FileField(
+        _('file'), blank=True, null=True, upload_to='movies/'
+    )
 
     genres = models.ManyToManyField(Genre, through='GenreFilmwork')
     persons = models.ManyToManyField(
         Person,
         through='PersonFilmwork',
-    )
-
-    file_path = models.FileField(
-        _('file'), blank=True, null=True, upload_to='movies/'
     )
 
     def __str__(self):
