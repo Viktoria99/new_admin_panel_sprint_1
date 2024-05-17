@@ -88,6 +88,18 @@ class GenreFilmwork(UUIDMixin):
 
     class Meta:
         db_table = 'content"."genre_film_work'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['film_work_id', 'genre_id'],
+                name='film_genre',
+            )
+        ]
+        indexes = [
+            models.Index(
+                name='film_genre_idx',
+                fields=['film_work_id', 'genre_id'],
+            )
+        ]
         verbose_name = _('genre_film')
         verbose_name_plural = _('genres_film')
 
