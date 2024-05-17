@@ -1,9 +1,10 @@
-import sqlite3
-import psycopg2
 import contextlib
+import sqlite3
+
+import psycopg2
 from psycopg2.extras import DictCursor
-from sqlite_to_postgres.tables import *
 from sqlite_to_postgres.settings import *
+from sqlite_to_postgres.tables import *
 
 
 def get_counters(table_size: int, batch: int):

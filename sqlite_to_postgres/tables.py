@@ -1,8 +1,9 @@
 import datetime
 from dataclasses import dataclass
-from uuid import UUID
-from pydantic import BaseModel, field_validator, ConfigDict
 from datetime import datetime as datetime_format
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, field_validator
 
 
 def getTablesClass():

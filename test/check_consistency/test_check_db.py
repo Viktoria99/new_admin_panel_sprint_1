@@ -1,6 +1,7 @@
-import sqlite3
-import psycopg2
 import contextlib
+import sqlite3
+
+import psycopg2
 from psycopg2.extras import DictCursor
 from sqlite_to_postgres.settings import *
 

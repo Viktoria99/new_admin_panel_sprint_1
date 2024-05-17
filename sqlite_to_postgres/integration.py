@@ -1,10 +1,13 @@
 import sqlite3
-import psycopg2
-from psycopg2.extras import execute_values
 from dataclasses import astuple
-from tables import Model
-from psycopg2.extensions import connection
+
+import psycopg2
 from psycopg2 import errors
+from psycopg2.extensions import connection
+from psycopg2.extras import execute_values
+
+from logger import logger_load
+from tables import Model
 
 
 class ServiceLoad:
@@ -27,7 +30,7 @@ class ServiceLoad:
         try:
             sqlLite_curs.execute(self.sql_count)
             result = sqlLite_curs.fetchone()
-
+            raise Exception()
             batch_count = round(result['count'] / batch_size)
             if result['count'] < batch_size:
                 batch_count = 1
@@ -43,21 +46,21 @@ class ServiceLoad:
                 execute_values(postgres_cursor, self.sql_insert, films)
 
         except (errors.DataError, errors.IntegrityError) as err:
-            print(
+            logger_load.error(
                 'Postgres-{pgcode}: {pgerror}'.format(
                     pgcode=err.pgcode, pgerror=err.pgerror
                 )
             )
             raise
         except errors.Error as err:
-            print(
+            logger_load.error(
                 'Postgres-{pgcode}: {pgerror}'.format(
                     pgcode=err.pgcode, pgerror=err.pgerror
                 )
             )
             raise
         except sqlite3.Error as err:
-            print(
+            logger_load.error(
                 'SqlLite-{code}: {name}'.format(
                     code=err.sqlite_errorcode, name=err.sqlite_errorname
                 )

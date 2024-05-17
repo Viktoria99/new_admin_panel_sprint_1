@@ -1,10 +1,12 @@
-import sqlite3
-import psycopg2
 import contextlib
+import sqlite3
 from dataclasses import fields
-from settings import dsl, batch_size, db_path
+
+import psycopg2
 from psycopg2.extras import DictCursor
+
 from integration import ServiceLoad
+from settings import batch_size, db_path, dsl
 from tables import getTablesClass
 
 
