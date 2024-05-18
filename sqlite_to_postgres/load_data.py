@@ -19,8 +19,8 @@ def load_from_sqlite(db_path: str):
         sqlite_conn.row_factory = sqlite3.Row
         dict_tables = getTablesClass()
         keys = dict_tables.keys()
+        load = ServiceLoad()
         for item in keys:
-            load = ServiceLoad()
             load.sql_count = 'select count(*) as count from %s;' % item
             load.sql_load = 'select * from %s;' % item
             column_names = [field.name for field in fields(dict_tables[item])]
