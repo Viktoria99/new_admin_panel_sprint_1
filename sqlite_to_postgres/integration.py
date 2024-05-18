@@ -30,7 +30,7 @@ class ServiceLoad:
         try:
             sqlLite_curs.execute(self.sql_count)
             result = sqlLite_curs.fetchone()
-            raise Exception()
+
             batch_count = round(result['count'] / batch_size)
             if result['count'] < batch_size:
                 batch_count = 1
